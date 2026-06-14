@@ -1,0 +1,251 @@
+/* Cover Flow — iTunes-style chrome makeover.
+ *
+ * Replaces the native tab strip with a Cover Flow launcher pill + the
+ * standard "+" add-tab button, and skins the rest of the browser
+ * chrome in classic iTunes 10 brushed-aluminium aesthetics: glossy
+ * convex buttons, capsule address bar, soft inset highlights.
+ */
+
+/* ============================================================
+ * 1 — Hide the native tab list (we navigate via Cover Flow) but
+ *     keep the tab strip itself so the topbar height stays sane.
+ * ============================================================ */
+.tab-strip__tab { display: none !important; }
+
+/* ============================================================
+ * 2 — Brushed-silver topbar (the tab-strip region)
+ * ============================================================ */
+.tab-strip {
+  min-height: 44px !important;
+  padding: 7px 12px !important;
+  background: linear-gradient(180deg, #e6e6e6 0%, #c4c4c4 100%) !important;
+  border-bottom: 1px solid #6a6a6a !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 1px 0 rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ============================================================
+ * 3 — Browser-chrome row (back/fwd/reload + address bar)
+ * ============================================================ */
+.browser-chrome {
+  background: linear-gradient(180deg, #d8d8d8 0%, #b6b6b6 100%) !important;
+  border-bottom: 1px solid #6a6a6a !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+  padding: 7px 10px !important;
+  gap: 6px !important;
+}
+
+/* ============================================================
+ * 4 — Glossy convex buttons (back / forward / reload / etc.)
+ *     Same recipe applied to the +-tab button and the pill.
+ * ============================================================ */
+.nav-button {
+  background: linear-gradient(180deg, #fbfbfb 0%, #e2e2e2 48%, #c8c8c8 100%) !important;
+  color: #1c1c1c !important;
+  border: 1px solid rgba(0, 0, 0, 0.32) !important;
+  border-radius: 6px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.55) !important;
+  height: 26px !important;
+  min-width: 30px !important;
+  padding: 0 8px !important;
+  transition: background 80ms ease, box-shadow 80ms ease, transform 60ms ease !important;
+}
+.nav-button:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #ececec 48%, #d2d2d2 100%) !important;
+}
+.nav-button:active {
+  background: linear-gradient(180deg, #c0c0c0 0%, #b0b0b0 50%, #c0c0c0 100%) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(1px);
+}
+.nav-button:disabled {
+  opacity: 0.45 !important;
+}
+
+/* ============================================================
+ * 5 — Capsule address bar with aqua focus glow
+ * ============================================================ */
+.address-bar {
+  background: #ffffff !important;
+  border: 1px solid #888 !important;
+  border-radius: 999px !important;
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  padding: 2px 12px !important;
+  height: 24px !important;
+  transition: box-shadow 120ms ease, border-color 120ms ease !important;
+}
+.address-bar:focus-within {
+  border-color: #4a90e2 !important;
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.12),
+    0 0 0 3px rgba(74, 144, 226, 0.35) !important;
+}
+#address-input {
+  color: #1a1a1a !important;
+  background: transparent !important;
+  font: 13px/1 "Lucida Grande", "Segoe UI", sans-serif !important;
+  border: none !important;
+  outline: none !important;
+}
+#address-input::placeholder { color: #888 !important; }
+
+/* Security icon — neutral on light chrome. */
+.address-bar__security {
+  color: #555 !important;
+}
+.address-bar__security--secure { color: #2e7d32 !important; }
+.address-bar__security--insecure { color: #c62828 !important; }
+
+/* ============================================================
+ * 6 — Add-tab "+" button — glossy, sits to the right of the pill
+ *
+ *     Pill + button are positioned as a single CENTERED pair.
+ *     CSS vars below define the pair's layout so changing the pill
+ *     width or the gap automatically re-centers everything.
+ * ============================================================ */
+:root {
+  --cf-pill-w: 360px;
+  --cf-gap: 6px;
+  --cf-add-w: 28px;
+  --cf-pair-w: calc(var(--cf-pill-w) + var(--cf-gap) + var(--cf-add-w));
+}
+.tab-strip__add {
+  /* Override the default hidden behaviour and make it explicit again. */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: fixed !important;
+  top: 9px !important;
+  left: calc(50% - var(--cf-pair-w) / 2 + var(--cf-pill-w) + var(--cf-gap)) !important;
+  right: auto !important;
+  width: var(--cf-add-w) !important;
+  height: 28px !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  background: linear-gradient(180deg, #fbfbfb 0%, #e2e2e2 48%, #c8c8c8 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.32) !important;
+  color: #1c1c1c !important;
+  font: 600 17px/1 "Lucida Grande", "Segoe UI", sans-serif !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.55) !important;
+  cursor: pointer !important;
+  -webkit-app-region: no-drag;
+  z-index: 9999 !important;
+  transition:
+    background 80ms ease,
+    box-shadow 80ms ease,
+    transform 60ms ease,
+    left 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    margin-left 280ms cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+/* While the Cover Flow overlay is open the launcher pill is covered
+ * by the carousel anyway, so we hide it and move the "+" button to
+ * dead-centre at the top — and lift it above the overlay so the user
+ * can still spawn a new tab without first closing the carousel.
+ */
+html[data-cf-open] .cf-pill {
+  display: none !important;
+}
+html[data-cf-open] .tab-strip__add {
+  left: 50% !important;
+  margin-left: calc(var(--cf-add-w) / -2) !important;
+  z-index: 100001 !important;
+}
+
+.tab-strip__add:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #ececec 48%, #d2d2d2 100%) !important;
+}
+.tab-strip__add:active {
+  background: linear-gradient(180deg, #c0c0c0 0%, #b0b0b0 50%, #c0c0c0 100%) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(1px) !important;
+}
+
+/* ============================================================
+ * 7 — Cover Flow launcher pill — capsule, glossy
+ * ============================================================ */
+.cf-pill {
+  position: fixed;
+  top: 9px;
+  left: calc(50% - var(--cf-pair-w) / 2);
+  width: var(--cf-pill-w);
+  max-width: var(--cf-pill-w);
+  height: 28px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(180deg, #fbfbfb 0%, #e2e2e2 48%, #c8c8c8 100%);
+  color: #1c1c1c;
+  border: 1px solid rgba(0, 0, 0, 0.32);
+  border-radius: 999px;
+  font: 13px/1 "Lucida Grande", "Segoe UI", sans-serif;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 9999;
+  user-select: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.55);
+  transition: background 80ms ease, box-shadow 80ms ease, transform 60ms ease;
+  -webkit-app-region: no-drag;
+}
+.cf-pill:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #ececec 48%, #d2d2d2 100%);
+}
+.cf-pill:active {
+  background: linear-gradient(180deg, #c0c0c0 0%, #b0b0b0 50%, #c0c0c0 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.cf-pill__icon { font-size: 13px; line-height: 1; opacity: 0.7; }
+.cf-pill__domain {
+  flex: 1 1 auto;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cf-pill__sep { color: #888; font-weight: 400; }
+.cf-pill__count {
+  flex: 0 0 auto;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: #444;
+}
+
+/* ============================================================
+ * 8 — Status text under the address bar (small grey caption)
+ * ============================================================ */
+.browser-status {
+  color: rgba(0, 0, 0, 0.55) !important;
+  font-size: 11px !important;
+  font-family: "Lucida Grande", "Segoe UI", sans-serif !important;
+}
+
+/* ============================================================
+ * 9 — Window controls (min / max / close)
+ *     Defaults are white-on-dark; on this light brushed-aluminium chrome
+ *     the icons were washed out and the maximized "restore" glyph has a
+ *     hardcoded dark inner square (#0f172a) that read as an ugly black box.
+ *     Recolour to dark icons + a light inner square. Use mode only so the
+ *     build-mode controls are left exactly as they are.
+ * ============================================================ */
+body:not([data-build-mode="true"]) .window-control { color: #1c1c1c !important; }
+body:not([data-build-mode="true"]) .window-control:hover { background: rgba(0,0,0,0.10) !important; color: #000 !important; }
+body:not([data-build-mode="true"]) .window-control--close:hover { background: #e81123 !important; color: #fff !important; }
+body:not([data-build-mode="true"]) .window-control__restore rect:last-child { fill: #d8d8d8 !important; }

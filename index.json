@@ -3,6 +3,24 @@
   "updated": "2026-06-14",
   "templates": [
     {
+      "id": "cover-flow",
+      "name": "Cover Flow",
+      "description": "Flip through your open tabs like album covers — a visual, tactile tab switcher that floats over the page.",
+      "author": "Cule",
+      "tags": [
+        "tabs",
+        "visual",
+        "overlay"
+      ],
+      "path": "cover-flow",
+      "preview": null,
+      "permissions": [
+        "overlay"
+      ],
+      "hasContentScript": true,
+      "hasChromeCode": true
+    },
+    {
       "id": "default",
       "name": "Default",
       "description": "Cule's clean, no-frills browser — a safe baseline to fall back to if a template ever breaks your chrome.",
@@ -13,10 +31,32 @@
         "safe"
       ],
       "path": "default",
-      "preview": null,
+      "preview": "default/preview.png",
       "permissions": [],
       "hasContentScript": false,
       "hasChromeCode": false
+    },
+    {
+      "id": "game-radar",
+      "name": "Game Radar",
+      "description": "A gaming dashboard: see what's running, jump straight to wikis, and keep your favourite games one click away.",
+      "author": "Cule",
+      "tags": [
+        "gaming",
+        "dashboard",
+        "steam"
+      ],
+      "path": "game-radar",
+      "preview": null,
+      "permissions": [
+        "overlay",
+        "registry:HKCU/Software/Valve/Steam",
+        "fs:~/Library/Application Support/Steam",
+        "fs:~/.steam",
+        "fs:~/.local/share/Steam"
+      ],
+      "hasContentScript": true,
+      "hasChromeCode": true
     },
     {
       "id": "research",
@@ -29,7 +69,7 @@
         "notes"
       ],
       "path": "research",
-      "preview": null,
+      "preview": "research/preview.png",
       "permissions": [
         "overlay",
         "clipboard"

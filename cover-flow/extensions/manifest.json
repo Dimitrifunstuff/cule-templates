@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "enabled": true,
+  "overlay": "passthrough",
+  "permissions": ["overlay"],
+  "browser": {
+    "css": "browser.css",
+    "js": "browser.js"
+  },
+  "content": {
+    "css": "content.css",
+    "js": "content.js"
+  }
+}

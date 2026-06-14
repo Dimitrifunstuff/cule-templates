@@ -1,0 +1,6 @@
+/* Cover Flow — page-content styling.
+ *
+ * Universal page styles are intentionally minimal: the heavier
+ * iTunes-style makeover for Google lives in content.js so it only
+ * activates on google.* hosts, not every site the user visits.
+ */

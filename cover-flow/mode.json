@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "nativeChrome": true,
+  "name": "Cover Flow",
+  "brand": "Cule",
+  "sidebar": {
+    "enabled": false,
+    "width": 0,
+    "title": ""
+  },
+  "layout": {
+    "splitView": false,
+    "title": "",
+    "description": ""
+  },
+  "browser": {
+    "homeUrl": "https://example.com",
+    "addressPlaceholder": "Search the web",
+    "chromeStyles": "",
+    "previewViews": [],
+    "pageStyles": [],
+    "behaviors": {
+      "celebrateOnNewTab": false,
+      "companion": { "enabled": false }
+    }
+  },
+  "modules": []
+}

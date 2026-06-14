@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "enabled": true,
+  "overlay": "passthrough",
+  "permissions": [
+    "overlay",
+    "registry:HKCU/Software/Valve/Steam",
+    "fs:~/Library/Application Support/Steam",
+    "fs:~/.steam",
+    "fs:~/.local/share/Steam"
+  ],
+  "browser": {
+    "css": "browser.css",
+    "js": "browser.js"
+  },
+  "content": {
+    "css": "content.css",
+    "js": "content.js"
+  }
+}

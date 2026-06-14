@@ -1,0 +1,683 @@
+/* ============================================================
+   Game Radar — floating widget styles (lives inside the overlay
+   iframe; passthrough means everything is transparent unless
+   we paint it). All variables stay local to the widget so we
+   never leak into the Cule chrome.
+   ============================================================ */
+
+.gr-root {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  z-index: 2147483000;
+  pointer-events: auto;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  --accent: #00f5ff;
+  --bg: #0c1120;
+  --bg-2: #11172a;
+  --border: rgba(0, 245, 255, 0.18);
+  --text: #e6f5ff;
+  --muted: #7a869f;
+  --row-hover: rgba(0, 245, 255, 0.06);
+  --row-active: rgba(0, 245, 255, 0.10);
+}
+
+/* ---------- Home / dashboard toggle ---------- */
+.gr-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(20, 26, 44, 0.96) 0%, rgba(10, 14, 26, 0.96) 100%);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    0 0 24px -10px var(--accent);
+  transition: transform 140ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+.gr-home-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(0, 245, 255, 0.55);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.5),
+    0 0 32px -8px var(--accent);
+}
+.gr-home-btn:active { transform: translateY(0); }
+.gr-home-glyph {
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 12px rgba(0, 245, 255, 0.6);
+}
+
+/* ---------- Pill ---------- */
+.gr-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(180deg, rgba(20, 26, 44, 0.96) 0%, rgba(10, 14, 26, 0.96) 100%);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 14px 7px 9px;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+    0 0 24px -8px var(--accent);
+  transition: transform 140ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  white-space: nowrap;
+}
+.gr-pill:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 36px -8px var(--accent);
+}
+.gr-pill:active { transform: translateY(0); }
+
+.gr-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2a3344;
+  flex: 0 0 auto;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.04) inset;
+}
+.gr-dot.on {
+  background: var(--accent);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.06) inset,
+    0 0 12px var(--accent);
+  animation: gr-pulse 1.8s ease-in-out infinite;
+}
+@keyframes gr-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+.gr-icon {
+  font-size: 18px;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.6));
+}
+
+.gr-labels {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+  min-width: 0;
+}
+.gr-status {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.gr-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--text);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gr-chev {
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: 2px;
+  transform: rotate(0deg);
+  transition: transform 160ms ease, color 160ms ease;
+}
+.gr-chev.open {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+/* ---------- Panel ---------- */
+.gr-panel {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  width: 360px;
+  max-height: 460px;
+  background: linear-gradient(180deg, rgba(14, 19, 36, 0.98) 0%, rgba(8, 11, 22, 0.98) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+    0 0 32px -10px var(--accent);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: gr-pop 180ms cubic-bezier(.2, .8, .2, 1.05);
+  transform-origin: bottom right;
+}
+.gr-panel[hidden] { display: none; }
+@keyframes gr-pop {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+.gr-head {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.08);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(0, 245, 255, 0.06), transparent 60%),
+    transparent;
+}
+.gr-head-title {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  text-shadow: 0 0 14px rgba(0, 245, 255, 0.4);
+}
+.gr-head-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 3px;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Auto-detect row ---------- */
+.gr-auto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.06);
+}
+.gr-auto-left { min-width: 0; }
+.gr-auto-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.gr-auto-sub {
+  font-size: 10.5px;
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+  font-family: "JetBrains Mono", "Consolas", monospace;
+}
+.gr-tone-ok   { color: #4ade80; }
+.gr-tone-neu  { color: var(--muted); }
+.gr-tone-warn { color: #fbbf24; }
+
+.gr-toggle {
+  width: 38px;
+  height: 22px;
+  background: #1a2030;
+  border: 1px solid #2a3344;
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease;
+  flex: 0 0 auto;
+  padding: 0;
+}
+.gr-toggle .gr-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #5a6480;
+  border-radius: 50%;
+  transition: left 180ms cubic-bezier(.2, .8, .2, 1), background 180ms ease, box-shadow 180ms ease;
+}
+.gr-toggle.on {
+  background: rgba(0, 245, 255, 0.15);
+  border-color: rgba(0, 245, 255, 0.45);
+}
+.gr-toggle.on .gr-knob {
+  left: 18px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* ---------- Search ---------- */
+.gr-search-row {
+  padding: 10px 12px 8px;
+}
+.gr-search {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 245, 255, 0.12);
+  border-radius: 8px;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.gr-search:focus {
+  border-color: rgba(0, 245, 255, 0.45);
+  box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.08);
+}
+.gr-search::placeholder { color: var(--muted); }
+
+/* ---------- Game list ---------- */
+.gr-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 6px 10px;
+  flex: 1 1 auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 245, 255, 0.25) transparent;
+}
+.gr-list::-webkit-scrollbar { width: 8px; }
+.gr-list::-webkit-scrollbar-track { background: transparent; }
+.gr-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.18);
+  border-radius: 4px;
+}
+
+.gr-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 130ms ease, border-color 130ms ease;
+}
+.gr-row + .gr-row { margin-top: 2px; }
+.gr-row:hover {
+  background: var(--row-hover);
+  border-color: rgba(0, 245, 255, 0.12);
+}
+.gr-row.active {
+  background: var(--row-active);
+  border-color: rgba(0, 245, 255, 0.35);
+  box-shadow: 0 0 18px -6px var(--accent) inset;
+}
+.gr-row-sug {
+  background: rgba(0, 245, 255, 0.04);
+  border-color: rgba(0, 245, 255, 0.18);
+}
+
+.gr-row-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.gr-row-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gr-row-meta {
+  flex: 0 0 auto;
+  font-size: 10px;
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.gr-row.active .gr-row-meta { color: var(--accent); }
+.gr-row-meta-hot {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(0, 245, 255, 0.5);
+}
+
+.gr-empty {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 16px;
+}
+
+/* ============================================================
+   Dashboard — fullscreen home page (about:blank). Lives below the
+   Cule chrome (top offset clears the tab strip + nav bar).
+   ============================================================ */
+.gr-dashboard {
+  position: fixed;
+  top: 88px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0, 245, 255, 0.10), transparent 60%),
+    radial-gradient(ellipse 90% 50% at 10% 110%, rgba(122, 31, 31, 0.18), transparent 60%),
+    linear-gradient(180deg, #0a0e1a 0%, #050810 100%);
+  color: #e6f5ff;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  pointer-events: auto;
+  z-index: 2147482000;
+  animation: gr-dash-fade 220ms ease;
+}
+.gr-dashboard[hidden] { display: none; }
+
+@keyframes gr-dash-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.gr-dash-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 245, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse at 50% 25%, black 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 25%, black 0%, transparent 75%);
+  pointer-events: none;
+}
+
+/* ---------- Close ✕ ---------- */
+.gr-dash-close {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  color: #a8b1c4;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  z-index: 2;
+}
+.gr-dash-close:hover {
+  background: rgba(0, 245, 255, 0.08);
+  border-color: rgba(0, 245, 255, 0.40);
+  color: #e6f5ff;
+  transform: rotate(90deg);
+}
+
+.gr-dash-content {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 72px 32px 140px;
+}
+
+/* ---------- Hero ---------- */
+.gr-dash-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.gr-dash-eyebrow {
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-size: 11px;
+  letter-spacing: 6px;
+  color: #00f5ff;
+  text-shadow: 0 0 16px rgba(0, 245, 255, 0.6);
+  margin-bottom: 18px;
+}
+.gr-dash-title {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -1.6px;
+  margin: 0 0 14px;
+  line-height: 1.04;
+  background: linear-gradient(180deg, #ffffff 0%, #7ad8ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 24px rgba(0, 245, 255, 0.15));
+}
+.gr-dash-sub {
+  font-size: 13px;
+  color: #7a869f;
+  letter-spacing: 0.4px;
+}
+.gr-dash-sub strong { font-weight: 700; }
+
+/* ---------- Search bar ---------- */
+.gr-dash-search-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, rgba(14, 19, 36, 0.92) 0%, rgba(8, 11, 22, 0.92) 100%);
+  border: 1px solid rgba(0, 245, 255, 0.22);
+  border-radius: 18px;
+  padding: 6px 6px 6px 22px;
+  margin: 0 auto 52px;
+  max-width: 720px;
+  box-shadow:
+    0 24px 72px -24px rgba(0, 245, 255, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 200ms ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.gr-dash-search-form:focus-within {
+  border-color: rgba(0, 245, 255, 0.55);
+  box-shadow:
+    0 28px 80px -20px rgba(0, 245, 255, 0.5),
+    0 0 0 4px rgba(0, 245, 255, 0.08);
+  transform: translateY(-1px);
+}
+.gr-dash-search-icon {
+  font-size: 18px;
+  opacity: 0.7;
+  flex: 0 0 auto;
+}
+.gr-dash-search-input {
+  flex: 1 1 auto;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e6f5ff;
+  font: inherit;
+  font-size: 17px;
+  padding: 18px 4px;
+  letter-spacing: 0.2px;
+  min-width: 0;
+}
+.gr-dash-search-input::placeholder { color: #4a5568; }
+.gr-dash-search-go {
+  flex: 0 0 auto;
+  background: linear-gradient(180deg, #00f5ff 0%, #00cad4 100%);
+  color: #061122;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 22px;
+  font: inherit;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 200ms ease;
+}
+.gr-dash-search-go:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px -6px rgba(0, 245, 255, 0.6);
+}
+.gr-dash-search-go:active { transform: translateY(0); }
+
+/* ---------- Section header ---------- */
+.gr-dash-section { margin-bottom: 36px; }
+.gr-dash-section-title {
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  color: #6c7689;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.gr-dash-section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 245, 255, 0.18), transparent);
+}
+
+/* ---------- Game tiles ---------- */
+.gr-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 12px;
+}
+.gr-dash-tile {
+  --tile-accent: rgba(0, 245, 255, 0.4);
+  background: linear-gradient(180deg, rgba(20, 26, 44, 0.6) 0%, rgba(12, 16, 28, 0.6) 100%);
+  border: 1px solid rgba(0, 245, 255, 0.08);
+  border-radius: 14px;
+  padding: 18px 16px 16px;
+  cursor: pointer;
+  color: #e6f5ff;
+  font: inherit;
+  text-align: left;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.gr-dash-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, var(--tile-accent) 0%, transparent 50%);
+  opacity: 0.10;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+.gr-dash-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--tile-accent);
+  background: linear-gradient(180deg, rgba(20, 26, 44, 0.85) 0%, rgba(12, 16, 28, 0.85) 100%);
+  box-shadow: 0 18px 32px -16px var(--tile-accent);
+}
+.gr-dash-tile:hover::before { opacity: 0.30; }
+.gr-dash-tile.active {
+  border-color: var(--tile-accent);
+  box-shadow: 0 0 0 1px var(--tile-accent) inset, 0 18px 32px -16px var(--tile-accent);
+}
+.gr-dash-tile-icon {
+  font-size: 26px;
+  line-height: 1;
+  filter: drop-shadow(0 0 14px var(--tile-accent));
+}
+.gr-dash-tile-name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gr-dash-tile-meta {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #6c7689;
+  font-family: "JetBrains Mono", "Consolas", monospace;
+}
+.gr-dash-tile.active .gr-dash-tile-meta { color: var(--tile-accent); }
+.gr-dash-tile-more {
+  background: transparent;
+  border: 1px dashed rgba(0, 245, 255, 0.25);
+}
+
+/* ---------- Quick links ---------- */
+.gr-dash-quicklinks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+.gr-dash-quick {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(0, 245, 255, 0.10);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #a8b1c4;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+.gr-dash-quick:hover {
+  background: rgba(0, 245, 255, 0.06);
+  border-color: rgba(0, 245, 255, 0.35);
+  color: #e6f5ff;
+  transform: translateY(-1px);
+}
+.gr-dash-quick-icon {
+  font-size: 15px;
+  flex: 0 0 auto;
+}
+
+/* ---------- Footer ---------- */
+.gr-dash-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 36px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0, 245, 255, 0.08);
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-size: 10.5px;
+  letter-spacing: 1px;
+  color: #4f5a73;
+  text-transform: uppercase;
+}
+.gr-dash-stat { color: #a8b1c4; }
+.gr-dash-footer-hint { color: #4f5a73; }
