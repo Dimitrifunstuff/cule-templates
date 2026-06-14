@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "nativeChrome": true,
+  "name": "Webdev Mode",
+  "brand": "Cule",
+  "sidebar": {
+    "enabled": true,
+    "width": 260,
+    "title": "Webdev Notes"
+  },
+  "layout": {
+    "splitView": false,
+    "title": "Responsive Preview",
+    "description": "View the same page in phone, tablet, and desktop widths at the same time."
+  },
+  "browser": {
+    "homeUrl": "https://example.com",
+    "addressPlaceholder": "Enter a URL",
+    "previewViews": [
+      {
+        "id": "phone",
+        "label": "Phone",
+        "width": "390px"
+      },
+      {
+        "id": "tablet",
+        "label": "Tablet",
+        "width": "820px"
+      },
+      {
+        "id": "desktop",
+        "label": "Desktop",
+        "width": "1fr"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "id": "mode-overview",
+      "enabled": true,
+      "placement": "sidebar"
+    }
+  ]
+}

@@ -76,6 +76,22 @@
       ],
       "hasContentScript": true,
       "hasChromeCode": true
+    },
+    {
+      "id": "webdev",
+      "name": "Webdev Mode",
+      "description": "Preview the same page at phone, tablet, and desktop widths side by side — with a notes sidebar for your build.",
+      "author": "Cule",
+      "tags": [
+        "webdev",
+        "responsive",
+        "preview"
+      ],
+      "path": "webdev",
+      "preview": null,
+      "permissions": [],
+      "hasContentScript": false,
+      "hasChromeCode": false
     }
   ]
 }
