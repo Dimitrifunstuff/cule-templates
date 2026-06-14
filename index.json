@@ -13,7 +13,7 @@
         "overlay"
       ],
       "path": "cover-flow",
-      "preview": null,
+      "preview": "cover-flow/preview.png",
       "permissions": [
         "overlay"
       ],
@@ -47,7 +47,7 @@
         "steam"
       ],
       "path": "game-radar",
-      "preview": null,
+      "preview": "game-radar/preview.png",
       "permissions": [
         "overlay",
         "registry:HKCU/Software/Valve/Steam",
@@ -88,7 +88,7 @@
         "preview"
       ],
       "path": "webdev",
-      "preview": null,
+      "preview": "webdev/preview.png",
       "permissions": [],
       "hasContentScript": false,
       "hasChromeCode": false
