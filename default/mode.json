@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "name": "Default",
+  "brand": "Cule",
+  "nativeChrome": true,
+  "advanced": {
+    "enabled": false,
+    "unsafeCSS": false
+  },
+  "sidebar": {
+    "enabled": true,
+    "width": 320,
+    "title": "Mode Modules"
+  },
+  "layout": {
+    "splitView": false,
+    "title": "Programmable Browser",
+    "description": "A minimal real browser surface with config-driven sidebar modules and mode-controlled layout."
+  },
+  "browser": {
+    "homeUrl": "https://example.com/",
+    "addressPlaceholder": "Enter a URL",
+    "chromeStyles": "",
+    "previewViews": [],
+    "showNavigation": true
+  },
+  "modules": [
+    {
+      "id": "mode-overview",
+      "enabled": true,
+      "placement": "sidebar",
+      "config": {}
+    },
+    {
+      "id": "welcome",
+      "enabled": true,
+      "placement": "main",
+      "config": {}
+    }
+  ]
+}

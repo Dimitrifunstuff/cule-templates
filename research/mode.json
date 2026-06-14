@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "nativeChrome": true,
+  "name": "Research",
+  "brand": "Cule",
+  "advanced": {
+    "enabled": false,
+    "unsafeCSS": false
+  },
+  "sidebar": {
+    "enabled": true,
+    "width": 320,
+    "title": "Mode Modules"
+  },
+  "layout": {
+    "splitView": false,
+    "title": "Research",
+    "description": "Capture the tabs you are reading into tidy research sessions, annotate each source, and export them."
+  },
+  "browser": {
+    "homeUrl": "https://www.google.com/",
+    "addressPlaceholder": "Search the web or enter a URL",
+    "chromeStyles": ".tab-strip__tab--active { box-shadow: inset 0 -2px 0 0 #8903ff; } #address-input::placeholder { color: #6c7689; } .tab-strip__tab--active::before,.tab-strip__tab--active::after{display:none} .nav-button--ext-action[data-ext-action-id=\"research\"]{background:#8903ff;border-radius:8px;margin-left:6px;padding-left:10px;padding-right:10px} .nav-button--ext-action[data-ext-action-id=\"research\"] .nav-action-icon,.nav-button--ext-action[data-ext-action-id=\"research\"] .nav-action-label{color:#fff} .nav-button--ext-action[data-ext-action-id=\"research\"]:hover{background:#9a2bff}",
+    "previewViews": [],
+    "chrome": {
+      "uiFontFamily": "\"Inter\", \"Segoe UI\", system-ui, sans-serif",
+      "uiScale": 1,
+      "tabStyle": "default",
+      "actions": [
+        {
+          "id": "home",
+          "label": "Home",
+          "icon": "⌂",
+          "title": "Your research home — sessions, recent captures & search",
+          "badge": ""
+        },
+        {
+          "id": "clip",
+          "label": "Clip",
+          "icon": "✂️",
+          "title": "Save the text you've highlighted on the page as a quote",
+          "badge": ""
+        },
+        {
+          "id": "snip",
+          "label": "Snip",
+          "icon": "📸",
+          "title": "Snip a region — drag to cut out part of the page",
+          "badge": ""
+        },
+        {
+          "id": "research",
+          "label": "Research ▾",
+          "icon": "☰",
+          "title": "Open your research panel — sessions, sources, notes & export",
+          "badge": ""
+        }
+      ],
+      "tabActions": [
+        {
+          "id": "capture",
+          "icon": "+",
+          "activeIcon": "✓",
+          "title": "Add this tab to your research session",
+          "activeTitle": "In your session — click to remove"
+        }
+      ],
+      "theme": {
+        "surface": "#252525",
+        "surfaceAlt": "#2b2b2b",
+        "border": "#303030",
+        "text": "#f5f7fb",
+        "mutedText": "#9a9fb3",
+        "accent": "#8903ff",
+        "addressBar": "#2b2b2b",
+        "addressBarText": "#d4d7e1",
+        "buttonSurface": "rgba(255, 255, 255, 0.05)",
+        "buttonText": "#d4d7e1"
+      }
+    },
+    "pageStyles": [],
+    "behaviors": {
+      "celebrateOnNewTab": false,
+      "companion": {
+        "enabled": false,
+        "emoji": "🐾",
+        "label": "Companion",
+        "curiosity": "off"
+      }
+    },
+    "internalPages": {
+      "newtab": "data:text/html,<!--rt-research-home--><body style=margin:0;background:rgb(29,29,29)></body>",
+      "welcome": "data:text/html,<!--rt-research-home--><body style=margin:0;background:rgb(29,29,29)></body>"
+    },
+    "searchEngine": null,
+    "newTabUrl": "browser://newtab",
+    "showNavigation": true
+  },
+  "modules": [
+    {
+      "id": "mode-overview",
+      "enabled": true,
+      "placement": "sidebar",
+      "config": {}
+    },
+    {
+      "id": "welcome",
+      "enabled": true,
+      "placement": "main",
+      "config": {}
+    }
+  ]
+}

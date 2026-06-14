@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "updated": "2026-06-14",
+  "templates": [
+    {
+      "id": "default",
+      "name": "Default",
+      "description": "Cule's clean, no-frills browser — a safe baseline to fall back to if a template ever breaks your chrome.",
+      "author": "Cule",
+      "tags": [
+        "default",
+        "minimal",
+        "safe"
+      ],
+      "path": "default",
+      "preview": null,
+      "permissions": [],
+      "hasContentScript": false,
+      "hasChromeCode": false
+    },
+    {
+      "id": "research",
+      "name": "Research",
+      "description": "A research workspace: snip regions, clip pages, and organize your sources by session.",
+      "author": "Cule",
+      "tags": [
+        "research",
+        "productivity",
+        "notes"
+      ],
+      "path": "research",
+      "preview": null,
+      "permissions": [
+        "overlay",
+        "clipboard"
+      ],
+      "hasContentScript": true,
+      "hasChromeCode": true
+    }
+  ]
+}
