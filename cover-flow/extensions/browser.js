@@ -24,7 +24,16 @@
     '<span class="cf-pill__count" data-count>0 tabs</span>'
   ].join('');
   pill.title = 'Open Cover Flow';
+  // macOS fix: the pill floats over the window's title-bar drag region.
+  // A no-drag set via a CSS *class* on a dynamically-injected element is
+  // unreliable on macOS (the OS keeps treating the spot as draggable and
+  // eats the click, so the menu never opens — Windows isn't affected).
+  // Setting -webkit-app-region inline at creation is honoured reliably.
+  pill.style.setProperty('-webkit-app-region', 'no-drag');
   document.body.appendChild(pill);
+  // Nudge a reflow so macOS recomputes the draggable regions now that the
+  // no-drag pill exists, instead of from the pre-injection layout.
+  void pill.offsetWidth;
 
   // Refresh pill label whenever the tab set or active tab changes.
   // Shows the active tab's domain (or "Other" for non-http schemes)
