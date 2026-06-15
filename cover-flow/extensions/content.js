@@ -415,22 +415,23 @@
       }
     }
 
-    /* ---- Google logo: 2006-era depth via stacked drop-shadows ----
-     * We don't replace the logo (too hostile + breaks brand
-     * recognition), just give it the softer, slightly embossed feel
-     * mid-2000s Google had. Three stacked drop-shadows for layered
-     * depth: a hairline white highlight on top, a soft dark shadow
-     * just below, and a wider ambient shadow underneath. A small
-     * saturation bump nudges the colours closer to that era's punch.
+    /* ---- Google logo / doodle → plain "google" wordmark ---------
+     * Hide the homepage logo (or the day's doodle) and drop in a
+     * simple text wordmark instead — inserted by replaceLogo() below.
+     * Scoped to the homepage logo area (#lga / #hplogo) so the small
+     * results-page logo is left untouched.
      */
-    #hplogo, .lnXdpd, img[alt="Google"],
-    [aria-label="Google"] svg,
-    [aria-label="Google"] img {
-      filter:
-        drop-shadow(0 1px 0 rgba(255,255,255,0.55))
-        drop-shadow(0 1px 1px rgba(0,0,0,0.18))
-        drop-shadow(0 4px 8px rgba(0,0,0,0.12))
-        saturate(1.1) !important;
+    #lga img, #lga svg, #hplogo, .lnXdpd {
+      display: none !important;
+    }
+    [data-cf-wordmark] {
+      font: 400 64px/1 "Lucida Grande","Helvetica Neue","Segoe UI",sans-serif !important;
+      color: #3a3a3a !important;
+      letter-spacing: -1px !important;
+      text-align: center !important;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.6) !important;
+      user-select: none !important;
+      margin: 0 auto 6px !important;
     }
 
     /* ---- One-off: filter-pill row container transparent ---------- */
@@ -628,8 +629,24 @@
     (document.head || document.documentElement).appendChild(style);
   }
 
-  injectStyle();
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectStyle, { once: true });
+  // Swap the homepage Google logo / doodle for a plain "google" wordmark.
+  function replaceLogo() {
+    const slot = document.querySelector('#lga')
+      || (document.querySelector('#hplogo') && document.querySelector('#hplogo').parentElement);
+    if (!slot || slot.querySelector('[data-cf-wordmark]')) return;
+    const mark = document.createElement('div');
+    mark.setAttribute('data-cf-wordmark', '');
+    mark.textContent = 'google';
+    slot.appendChild(mark);
   }
+
+  function apply() { injectStyle(); replaceLogo(); }
+
+  apply();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', apply, { once: true });
+  }
+  // A doodle can swap in after load — retry briefly, then stop.
+  let tries = 0;
+  const retry = setInterval(() => { replaceLogo(); if (++tries >= 6) clearInterval(retry); }, 400);
 })();
