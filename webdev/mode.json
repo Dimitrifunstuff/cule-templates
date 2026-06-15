@@ -23,14 +23,14 @@
         "width": "390px"
       },
       {
+        "id": "desktop",
+        "label": "Desktop",
+        "width": "1280px"
+      },
+      {
         "id": "tablet",
         "label": "Tablet",
         "width": "820px"
-      },
-      {
-        "id": "desktop",
-        "label": "Desktop",
-        "width": "1fr"
       }
     ]
   },
